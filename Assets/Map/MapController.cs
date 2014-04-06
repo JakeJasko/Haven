@@ -7,8 +7,8 @@ using System.Collections;
 [RequireComponent(typeof(MeshCollider))]
 public class MapController : MonoBehaviour {
 
-	int size_x = 15;
-	int size_y = 15;
+	int size_x = 30;
+	int size_y = 30;
 
 	public Texture2D tileset;
 	int tileResolution_x = 64;
@@ -74,9 +74,9 @@ public class MapController : MonoBehaviour {
 		Vector2[] uv = new Vector2[4];
 
 		vertices [0] = new Vector3 (0, 0, 0);
-		vertices [1] = new Vector3 (20, 0, 0);
-		vertices [2] = new Vector3 (0, 0, -10);
-		vertices [3] = new Vector3 (20, 0, -10);
+		vertices [1] = new Vector3 (30, 0, 0);
+		vertices [2] = new Vector3 (0, 0, -15);
+		vertices [3] = new Vector3 (30, 0, -15);
 
 		uv [0] = new Vector2 (0, 0);
 		uv [1] = new Vector2 (1, 0);
