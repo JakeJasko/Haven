@@ -9,9 +9,8 @@ public class MapController : MonoBehaviour {
 
 	int size_x = 15;
 	int size_y = 15;
-	float tileSize = 1.0f;
-	
-	public Texture2D terrainTiles;
+
+	public Texture2D tileset;
 	int tileResolution_x = 64;
 	int tileResolution_y = 32;
 
@@ -19,6 +18,18 @@ public class MapController : MonoBehaviour {
 		BuildMesh();
 	}
 
+	void DrawTile(int tile_type, int offset_x, int offset_y, Texture2D texture){
+		for(int px=0; px < tileResolution_x; px++){
+			for(int py=0; py < tileResolution_y; py++){
+				Color pixelColor = tileset.GetPixel(px + (tile_type * tileResolution_x), py);
+
+				if(pixelColor.a > 0){
+					texture.SetPixel(offset_x + px, offset_y + py, pixelColor);
+				}
+			}
+		}
+	}
+	
 	void BuildTexture() {
 		int texWidth = size_x * tileResolution_x + tileResolution_x / 2;
 		int texHeight = size_y * tileResolution_y + tileResolution_y / 2;
@@ -34,18 +45,13 @@ public class MapController : MonoBehaviour {
 			for(int j=size_y; j >= 0; j--) {
 				// Color[] p = tiles[ map.GetTileAt(x,y) ];
 
+				// Determine isometric coordinates
 				int x = (j * tileResolution_x / 2) + (i * tileResolution_x / 2);
 				int y = (i * tileResolution_y / 2) - (j * tileResolution_y / 2) + (size_y * tileResolution_y / 2);
 
-				for(int px=0; px < tileResolution_x; px++){
-					for(int py=0; py < tileResolution_y; py++){
-						Color pixelColor = terrainTiles.GetPixel(px,py);
+				// Draw Tile
+				DrawTile(Random.Range(0,3), x, y, texture);
 
-						if(pixelColor.a > 0){
-							texture.SetPixel(x + px, y + py, pixelColor);
-						}
-					}
-				}
 				// texture.SetPixels(x, y, tileResolution_x, tileResolution_y, terrainTiles.GetPixels());
 			}
 		}
