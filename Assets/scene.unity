@@ -232,6 +232,7 @@ GameObject:
   - 23: {fileID: 1420989310}
   - 33: {fileID: 1420989309}
   - 114: {fileID: 1420989308}
+  - 114: {fileID: 1420989312}
   m_Layer: 0
   m_Name: MapController
   m_TagString: Untagged
@@ -307,6 +308,18 @@ MeshCollider:
   m_SmoothSphereCollisions: 0
   m_Convex: 0
   m_Mesh: {fileID: 1651944924}
+--- !u!114 &1420989312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400002, guid: 87be997eed688694991bf290bbfd4319,
+    type: 2}
+  m_PrefabInternal: {fileID: 394356286}
+  m_GameObject: {fileID: 1420989306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 443272d6ccecbf94a956a772a51375fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1651944924
 Mesh:
   m_ObjectHideFlags: 0
