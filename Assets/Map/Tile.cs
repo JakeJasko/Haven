@@ -3,13 +3,13 @@ public class Tile {
 	enum TileType {
 		GRASS,
 		SAND,
-		OCEAN,
-		MOUNTAIN
+		DIRT
+	
 	}
 
 	TileType type;
 
 	public Tile() {
-		type = TileType.OCEAN;
+		type = TileType.GRASS;
 	}
 }
