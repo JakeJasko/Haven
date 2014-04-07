@@ -18,7 +18,7 @@ public class MapGeneration : MonoBehaviour {
 	}
 
 	void createRandomMap() {
-		string mapFile = "Assets/Map/Map.txt";
+		string mapFile = "Assets/Map/MapFiles/Map.txt";
 
 
 
@@ -28,10 +28,15 @@ public class MapGeneration : MonoBehaviour {
 		int tileMapSize = 3;
 
 	
-
+		int tile;
 		for(int y=0; y < playerMapY; y++){
 			for(int x=0; x< playerMapX; x++){
-				mapText = mapText+Random.Range (0,tileMapSize);
+				tile = Random.Range (0,tileMapSize);
+				if (tile < 10){
+					mapText += "0"+tile;
+				}else{
+					mapText += tile;
+				}
 			}
 			mapText=mapText+"\n";
 		}
