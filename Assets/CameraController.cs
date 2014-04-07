@@ -17,8 +17,9 @@ public class CameraController : MonoBehaviour {
 		float scrollDelta = Input.GetAxis ("Mouse ScrollWheel");
 		if (zoom - scrollDelta > min && zoom - scrollDelta < max) {
 			zoom -= scrollDelta;
+			Camera.main.orthographicSize = zoom;
 		}
 
-		Camera.main.orthographicSize = zoom;
+
 	}
 }
