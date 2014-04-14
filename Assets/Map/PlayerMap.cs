@@ -5,26 +5,93 @@ using System.Collections;
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
 public class PlayerMap : MonoBehaviour {
+	// Tile set controller logic
+	static Tileset tileset;
+
 	// Tiles per player map
-	int size_x = 30;
-	int size_y = 30;
-
-	// Tile Size
-	int tileResolution_x = 64;
-	int tileResolution_y = 32;
-
-	// Tile set
-	static Tileset tileset = new Tileset();
+	public int size_x = 30;
+	public int size_y = 30;
 
 	// Tile map
 	TileMap tilemap;
 
 	void Start () {
+		tileset = new Tileset ();
+
 		BuildMesh ();
 	}
 
-	void Update () {
+	void DrawTile(int tile_id, int offset_x, int offset_y, Texture2D texture){
+		// Pulls color array of tile based on type from tileset
+		Color[] tile = tileset.GetTile (tile_id);
+
+		// Loops through every pixel to skip drawing of alpha, otherwise overrides
+		for(int px=0; px < tileset.tile_width; px++){
+			for(int py=0; py < tileset.tile_height; py++){
+				Color pixelColor = tile[px, py];
+
+				// Alpha check
+				if(pixelColor.a > 0){
+					texture.SetPixel(offset_x + px, offset_y + py, pixelColor);
+				}
+			}
+		}
+	}
+
+	Vector2 toISO(Vector2 coords) {
+		Vector2 isoCoords = new Vector2 ();
+
+		isoCoords.x = (coords.x * tileset.tile_width/ 2) + (coords.y * tileset.tile_width / 2);
+		isoCoords.y = (coords.y * tileset.tile_height / 2) - (coords.x * tileset.tile_height / 2) + (size_y * tileset.tile_height / 2);
+
+		return isoCoords;
+	}
+
+	/* TO-DO
+	Vector2 fromISO(Vector2 isoCoords) {
+		Vector2 coords = new Vector2 ();
+	}
+	*/
 	
+	void BuildTexture() {
+		// Determine mesh texture resolution
+		int texWidth = size_x * tileset.tile_width; // + tileset.tile_width / 2;
+		int texHeight = size_y * tileset.tile_height; // + tileset.tile_height / 2;
+
+		// Instantiate empty texture for mesh
+		Texture2D texture = new Texture2D(texWidth, texHeight);
+
+		// Initialize texture to transparent
+		for (int i=0; i < texWidth; i++) {
+			for(int j=0; j < texHeight; j++){
+				texture.SetPixel(i,j,Color.clear);
+			}
+		}
+
+		//
+		for(int i=0; i < size_x; i++) {
+			for(int j=size_y; j >= 0; j--) {
+				// Color[] p = tiles[ map.GetTileAt(x,y) ];
+				
+				// Determine isometric coordinates
+				int x = (j * tileResolution_x / 2) + (i * tileResolution_x / 2);
+				int y = (i * tileResolution_y / 2) - (j * tileResolution_y / 2) + (size_y * tileResolution_y / 2);
+				
+				// Draw Tile
+				DrawTile(Random.Range(0,3), x, y, texture);
+				
+				// texture.SetPixels(x, y, tileResolution_x, tileResolution_y, terrainTiles.GetPixels());
+			}
+		}
+		
+		texture.filterMode = FilterMode.Point;
+		// texture.wrapMode = TextureWrapMode.Repeat;
+		texture.Apply();
+		
+		MeshRenderer mesh_renderer = GetComponent<MeshRenderer>();
+		mesh_renderer.sharedMaterial.mainTexture = texture;
+		
+		Debug.Log ("Done Texture!");
 	}
 
 	public void BuildMesh() {
@@ -70,53 +137,5 @@ public class PlayerMap : MonoBehaviour {
 		mesh_collider.sharedMesh = mesh;
 		
 		BuildTexture();
-	}
-	
-	void DrawTile(int tile_type, int offset_x, int offset_y, Texture2D texture){
-		for(int px=0; px < tileResolution_x; px++){
-			for(int py=0; py < tileResolution_y; py++){
-				Color pixelColor = tileset.GetPixel(px + (tile_type * tileResolution_x), py);
-				
-				if(pixelColor.a > 0){
-					texture.SetPixel(offset_x + px, offset_y + py, pixelColor);
-				}
-			}
-		}
-	}
-	
-	void BuildTexture() {
-		int texWidth = size_x * tileResolution_x + tileResolution_x / 2;
-		int texHeight = size_y * tileResolution_y + tileResolution_y / 2;
-		Texture2D texture = new Texture2D(texWidth, texHeight);
-		
-		for (int i=0; i < texWidth; i++) {
-			for(int j=0; j < texHeight; j++){
-				texture.SetPixel(i,j,Color.clear);
-			}
-		}
-		
-		for(int i=0; i < size_x; i++) {
-			for(int j=size_y; j >= 0; j--) {
-				// Color[] p = tiles[ map.GetTileAt(x,y) ];
-				
-				// Determine isometric coordinates
-				int x = (j * tileResolution_x / 2) + (i * tileResolution_x / 2);
-				int y = (i * tileResolution_y / 2) - (j * tileResolution_y / 2) + (size_y * tileResolution_y / 2);
-				
-				// Draw Tile
-				DrawTile(Random.Range(0,3), x, y, texture);
-				
-				// texture.SetPixels(x, y, tileResolution_x, tileResolution_y, terrainTiles.GetPixels());
-			}
-		}
-		
-		texture.filterMode = FilterMode.Point;
-		// texture.wrapMode = TextureWrapMode.Repeat;
-		texture.Apply();
-		
-		MeshRenderer mesh_renderer = GetComponent<MeshRenderer>();
-		mesh_renderer.sharedMaterial.mainTexture = texture;
-		
-		Debug.Log ("Done Texture!");
 	}
 }

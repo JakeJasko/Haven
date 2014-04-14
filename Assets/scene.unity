@@ -151,7 +151,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 212381746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.3904133, y: -7.31293392, z: -9.20489788}
+  m_LocalPosition: {x: 15.2371855, y: -7.35124111, z: -9.20489788}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -206,16 +206,17 @@ Prefab:
     - target: {fileID: 3300000, guid: 87be997eed688694991bf290bbfd4319, type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1651944924}
+      objectReference: {fileID: 1602464910}
     - target: {fileID: 6400000, guid: 87be997eed688694991bf290bbfd4319, type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1651944924}
+      objectReference: {fileID: 1602464910}
     - target: {fileID: 2300000, guid: 87be997eed688694991bf290bbfd4319, type: 2}
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400002, guid: 87be997eed688694991bf290bbfd4319, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 87be997eed688694991bf290bbfd4319, type: 2}
   m_RootGameObject: {fileID: 1420989306}
   m_IsPrefabParent: 0
@@ -232,7 +233,6 @@ GameObject:
   - 23: {fileID: 1420989310}
   - 33: {fileID: 1420989309}
   - 114: {fileID: 1420989308}
-  - 114: {fileID: 1420989312}
   m_Layer: 0
   m_Name: MapController
   m_TagString: Untagged
@@ -271,7 +271,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 394356286}
   m_GameObject: {fileID: 1420989306}
-  m_Mesh: {fileID: 1651944924}
+  m_Mesh: {fileID: 1602464910}
 --- !u!23 &1420989310
 Renderer:
   m_ObjectHideFlags: 0
@@ -307,20 +307,8 @@ MeshCollider:
   serializedVersion: 2
   m_SmoothSphereCollisions: 0
   m_Convex: 0
-  m_Mesh: {fileID: 1651944924}
---- !u!114 &1420989312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400002, guid: 87be997eed688694991bf290bbfd4319,
-    type: 2}
-  m_PrefabInternal: {fileID: 394356286}
-  m_GameObject: {fileID: 1420989306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 443272d6ccecbf94a956a772a51375fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!43 &1651944924
+  m_Mesh: {fileID: 1602464910}
+--- !u!43 &1602464910
 Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}

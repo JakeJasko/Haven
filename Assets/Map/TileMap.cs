@@ -11,7 +11,7 @@ public class TileMap {
 		_tiles = new Tile[_width * _height];
 	}
 
-	public Tile getTile(int x, int y) {
+	public Tile GetTile(int x, int y) {
 		if(x < 0 || x >= _width || y < 0 || y >= _height){
 			return null;
 		}
