@@ -21,7 +21,7 @@ public class Tileset : MonoBehaviour {
 		// Determines amount of tiles by areas with non-null pixel centers
 		for(int y=0; y < rows; y++)
 			for(int x=0; x < columns; x++)
-				if(tileset_image.GetPixel(x + tile_width / 2,y + tile_height / 2) > 0)
+				if(tileset_image.GetPixel(x + tile_width / 2,y + tile_height / 2).a > 0)
 					total_tiles++;
 	}
 

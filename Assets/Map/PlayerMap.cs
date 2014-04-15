@@ -28,7 +28,7 @@ public class PlayerMap : MonoBehaviour {
 		// Loops through every pixel to skip drawing of alpha, otherwise overrides
 		for(int px=0; px < tileset.tile_width; px++){
 			for(int py=0; py < tileset.tile_height; py++){
-				Color pixelColor = tile[px, py];
+				Color pixelColor = tile[py * tileset.tile_width + px];
 
 				// Alpha check
 				if(pixelColor.a > 0){
@@ -44,6 +44,15 @@ public class PlayerMap : MonoBehaviour {
 		isoCoords.x = (coords.x * tileset.tile_width/ 2) + (coords.y * tileset.tile_width / 2);
 		isoCoords.y = (coords.y * tileset.tile_height / 2) - (coords.x * tileset.tile_height / 2) + (size_y * tileset.tile_height / 2);
 
+		return isoCoords;
+	}
+
+	Vector2 toISO(float x, float y) {
+		Vector2 isoCoords = new Vector2 ();
+		
+		isoCoords.x = (x * tileset.tile_width/ 2) + (y * tileset.tile_width / 2);
+		isoCoords.y = (y * tileset.tile_height / 2) - (x * tileset.tile_height / 2) + (size_y * tileset.tile_height / 2);
+		
 		return isoCoords;
 	}
 
@@ -72,22 +81,22 @@ public class PlayerMap : MonoBehaviour {
 		for(int i=0; i < size_x; i++) {
 			for(int j=size_y; j >= 0; j--) {
 				// Color[] p = tiles[ map.GetTileAt(x,y) ];
-				
+
 				// Determine isometric coordinates
-				int x = (j * tileResolution_x / 2) + (i * tileResolution_x / 2);
-				int y = (i * tileResolution_y / 2) - (j * tileResolution_y / 2) + (size_y * tileResolution_y / 2);
+				Vector2 isoCoords = toISO(j, i);
 				
 				// Draw Tile
-				DrawTile(Random.Range(0,3), x, y, texture);
+				DrawTile(Random.Range(0,3), (int)isoCoords.x, (int)isoCoords.y, texture);
 				
 				// texture.SetPixels(x, y, tileResolution_x, tileResolution_y, terrainTiles.GetPixels());
 			}
 		}
-		
+
+		// Point filter does no pixel blending
 		texture.filterMode = FilterMode.Point;
-		// texture.wrapMode = TextureWrapMode.Repeat;
 		texture.Apply();
-		
+
+		// Assigns generated texture to mesh object
 		MeshRenderer mesh_renderer = GetComponent<MeshRenderer>();
 		mesh_renderer.sharedMaterial.mainTexture = texture;
 		
