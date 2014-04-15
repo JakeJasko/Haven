@@ -38,7 +38,7 @@ public class MapGeneration : MonoBehaviour {
 		//how many types of tiles
 		int tileMapSize = 4;
 
-		string tile_type = "0";
+		int tile_type = 0;
 		//keeps track of where on the IMG we are for the arrays
 		int map_position = 0;
 
@@ -55,26 +55,26 @@ public class MapGeneration : MonoBehaviour {
 
 				//tundra
 				if(temp == 0 && wet == 0){
-					tile_type = "O";
+					tile_type = 0;
 				//desert
 				}else if (temp == 1 && wet == 0){
-					tile_type = "~";
+					tile_type = 1;
 				//Forest
 				}else if (temp == 0 && wet == 1){
-					tile_type = "T";
+					tile_type =2;
 				//Forest
 				}else if (temp == 1 && wet == 1){
-					tile_type = "T";
+					tile_type = 2;
 				}
 
 				//keep it 2 digit
-				mapText = mapText+tile_type;
-				//if(tile_type<10){
-					//mapText = mapText+"0"+tile_type;
 
-				//}else{
-					//mapText = mapText+tile_type;
-				//}
+				if(tile_type<10){
+					mapText = mapText+"0"+tile_type;
+
+				}else{
+					mapText = mapText+tile_type;
+				}
 
 				map_position++;
 
