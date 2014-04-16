@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 
-[CustomEditor(typeof(MapController))]
+// [CustomEditor(typeof(MapController))]
 public class TileMapInspector : Editor {
 	
 	public override void OnInspectorGUI() {
@@ -10,8 +10,8 @@ public class TileMapInspector : Editor {
 		DrawDefaultInspector();
 		
 		if(GUILayout.Button("Regenerate")) {
-			MapController tileMap = (MapController)target;
-			tileMap.BuildMesh();
+			// MapController tileMap = (MapController)target;
+			// tileMap.BuildMesh();
 		}
 	}
 }

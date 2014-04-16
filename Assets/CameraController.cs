@@ -20,6 +20,14 @@ public class CameraController : MonoBehaviour {
 			Camera.main.orthographicSize = zoom;
 		}
 
+		if (Input.GetKeyDown (KeyCode.RightArrow))
+			Camera.main.transform.Translate (1, 0, 0);
+		if (Input.GetKeyDown (KeyCode.LeftArrow))
+			Camera.main.transform.Translate (-1, 0, 0);
+		if (Input.GetKeyDown (KeyCode.UpArrow))
+			Camera.main.transform.Translate (0, 1, 0);
+		if (Input.GetKeyDown (KeyCode.DownArrow))
+			Camera.main.transform.Translate (0, -1, 0);
 
 	}
 }

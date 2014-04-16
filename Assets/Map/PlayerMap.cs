@@ -5,18 +5,27 @@ using System.Collections;
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
 public class PlayerMap : MonoBehaviour {
-	// Tile set controller logic
+	// Tile set controller logic, finds tileset controller object in scene
+	static GameObject tileset_controller;
 	static Tileset tileset;
 
 	// Tiles per player map
-	public int size_x = 30;
-	public int size_y = 30;
+	static public int size_x = 30;
+	static public int size_y = 30;
 
 	// Tile map
-	TileMap tilemap;
+	// TileMap tilemap;
+
+	/*
+	public PlayerMap(int worldpos_x, int worldpos_y){
+		// TO-DO: load from file at this point in world
+		Start ();
+	}
+	*/
 
 	void Start () {
-		tileset = new Tileset ();
+		tileset_controller = GameObject.Find("Tileset Controller");
+		tileset = (Tileset) tileset_controller.GetComponent("Tileset");
 
 		BuildMesh ();
 	}
@@ -25,15 +34,17 @@ public class PlayerMap : MonoBehaviour {
 		// Pulls color array of tile based on type from tileset
 		Color[] tile = tileset.GetTile (tile_id);
 
+		if (tile == null)
+			return;
+
 		// Loops through every pixel to skip drawing of alpha, otherwise overrides
 		for(int px=0; px < tileset.tile_width; px++){
 			for(int py=0; py < tileset.tile_height; py++){
 				Color pixelColor = tile[py * tileset.tile_width + px];
 
 				// Alpha check
-				if(pixelColor.a > 0){
+				if(pixelColor.a > 0)
 					texture.SetPixel(offset_x + px, offset_y + py, pixelColor);
-				}
 			}
 		}
 	}
@@ -64,8 +75,8 @@ public class PlayerMap : MonoBehaviour {
 	
 	void BuildTexture() {
 		// Determine mesh texture resolution
-		int texWidth = size_x * tileset.tile_width; // + tileset.tile_width / 2;
-		int texHeight = size_y * tileset.tile_height; // + tileset.tile_height / 2;
+		int texWidth = size_x * tileset.tile_width+ tileset.tile_width / 2;
+		int texHeight = size_y * tileset.tile_height + tileset.tile_height / 2;
 
 		// Instantiate empty texture for mesh
 		Texture2D texture = new Texture2D(texWidth, texHeight);
