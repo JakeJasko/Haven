@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using HavenMath;
 
 // [ExecuteInEditMode]
 public class MapController : MonoBehaviour {
@@ -9,8 +10,8 @@ public class MapController : MonoBehaviour {
 	static int worldpos_y = 0;
 
 	// Mini-map Size
-	static readonly int minimap_size_x = 3;
-	static readonly int minimap_size_y = 3;
+	public static readonly int minimap_size_x = 3;
+	public static readonly int minimap_size_y = 3;
 
 	// Playermap offset
 	static readonly int playermap_offset_x = PlayerMap.size_x;
@@ -32,6 +33,13 @@ public class MapController : MonoBehaviour {
 	}
 
 	void UpdatePosition(){
+		for (int i = 0; i < minimap_size_x; i++) {
+			for(int j = minimap_size_y - 1; j >= 0; j--){
+			// Updates position of PlayerMap object using offset
+				Vector2 new_position = HavenMath.Iso.toISO(j, i, playermap_offset_x, playermap_offset_y);
+				playermap_objects[i * minimap_size_x + j].transform.position = new_position;
+			}
+		}
 
 	}
 
@@ -43,11 +51,14 @@ public class MapController : MonoBehaviour {
 			
 			// Creates & Instantiates into scene the PlayerMapPrefab GameObject
 			GameObject playermap_controller = Instantiate(Resources.Load("PlayerMapPrefab")) as GameObject;
-			
+			PlayerMap playermap = (PlayerMap) playermap_controller.GetComponent("PlayerMap");
+
 			// Keeps track of the PlayerMap GameObjects in scene
 			playermap_objects[i] = playermap_controller;
 			// Keeps track of the PlayerMap script within the GameObjects
-			minimap[i] = (PlayerMap) playermap_controller.GetComponent("PlayerMap");
+			minimap[i] = playermap;
+
+			// playermap.BuildTexture();
 		}
 	}
 }
