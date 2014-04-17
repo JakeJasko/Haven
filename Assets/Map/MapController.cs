@@ -14,8 +14,8 @@ public class MapController : MonoBehaviour {
 	public static readonly int minimap_size_y = 3;
 
 	// Playermap offset
-	static readonly int playermap_offset_x = PlayerMap.size_x;
-	static readonly int playermap_offset_y = PlayerMap.size_y / 2;
+	static readonly float playermap_offset_x = PlayerMap.mesh_width;
+	static readonly float playermap_offset_y = PlayerMap.mesh_height;
 	
 	// This is an array of the playermap objects in the scene
 	static GameObject[] playermap_objects = new GameObject[minimap_size_x * minimap_size_y];

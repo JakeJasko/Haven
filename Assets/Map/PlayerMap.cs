@@ -10,8 +10,12 @@ public class PlayerMap : MonoBehaviour {
 	static Tileset tileset;
 
 	// Tiles per player map
-	static public readonly int size_x = 30;
-	static public readonly int size_y = 30;
+	public static readonly int size_x = 30;
+	public static readonly int size_y = 30;
+
+	// Mesh Size
+	public static readonly float mesh_width = 19.2f;
+	public static readonly float mesh_height = 9.6f;
 
 	/*
 	public PlayerMap(int worldpos_x, int worldpos_y){
@@ -65,7 +69,7 @@ public class PlayerMap : MonoBehaviour {
 	public void BuildTexture() {
 		// Determine mesh texture resolution
 		int texWidth = size_x * Tileset.tile_width; // + Tileset.tile_width / 2;
-		int texHeight = size_y * Tileset.tile_height + Tileset.tile_height / 2;
+		int texHeight = size_y * Tileset.tile_height; // + Tileset.tile_height / 2;
 
 		// Instantiate empty texture for mesh
 		Texture2D texture = new Texture2D(texWidth, texHeight);
@@ -73,10 +77,7 @@ public class PlayerMap : MonoBehaviour {
 		// Initialize texture to transparent
 		for (int i=0; i < texWidth; i++) {
 			for(int j=0; j < texHeight; j++){
-				if(i % 2 == 0 || j % 2 == 0)
-					texture.SetPixel(i,j,Color.red);
-				else
-					texture.SetPixel(i,j,Color.blue);
+				texture.SetPixel(i,j,Color.clear);
 			}
 		}
 
@@ -99,9 +100,9 @@ public class PlayerMap : MonoBehaviour {
 		Vector2[] uv = new Vector2[4];
 		
 		vertices [0] = new Vector3 (0, 0, 0);
-		vertices [1] = new Vector3 (192, 0, 0);		//(size_x, 0, 0);
-		vertices [2] = new Vector3 (0, 0, -96);		//(0, 0, -size_y / 2);
-		vertices [3] = new Vector3 (192, 0, -96);	//(size_x, 0, -size_y /2);
+		vertices [1] = new Vector3 (mesh_width, 0, 0);		//(size_x, 0, 0);
+		vertices [2] = new Vector3 (0, 0, -mesh_height);		//(0, 0, -size_y / 2);
+		vertices [3] = new Vector3 (mesh_width, 0, -mesh_height);	//(size_x, 0, -size_y /2);
 		
 		uv [0] = new Vector2 (0, 0);
 		uv [1] = new Vector2 (1, 0);
