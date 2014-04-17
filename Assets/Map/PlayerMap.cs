@@ -14,8 +14,8 @@ public class PlayerMap : MonoBehaviour {
 	public static readonly int size_y = 30;
 
 	// Mesh Size
-	public static readonly float mesh_width = 19.2f;
-	public static readonly float mesh_height = 9.6f;
+	public static readonly float mesh_width = 30;
+	public static readonly float mesh_height = 15;
 
 	/*
 	public PlayerMap(int worldpos_x, int worldpos_y){
