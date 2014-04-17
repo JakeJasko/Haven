@@ -5,17 +5,17 @@ using System.IO;
 
 
 public class MapGeneration : MonoBehaviour {
-
+	//where to acquire temp/wet noise maps
 	public Texture2D tempFile;
 	public Texture2D wetFile;
 
 	string mapText;
 	float temp;
 	float wet;
-	int map_scale;
 
-
-
+	//map scale
+	int map_scale = 1;
+	
 	// Use this for initialization
 	void Start () {
 
@@ -27,22 +27,21 @@ public class MapGeneration : MonoBehaviour {
 	}
 
 	public void createRandomMap() {
-		string mapFile = "Assets/Map/MapFiles/Map.txt";
 		//where to save map file
-		
-		
-		//where to acquire temp/wet noise maps
+		string mapFile = "Assets/Map/MapFiles/Map.txt";
 		
 		//xy map dimensions
 		int playerMapX = 90;
 		int playerMapY = 90;
+		//For writing to text file
 		string current_line = "";
-		map_scale = 1;
+	
 		
 		//how many types of tiles
 		int tileMapSize = 2;
 		
 		int tile_type = 0;
+
 		//keeps track of where on the IMG we are for the arrays
 		int map_position = 0;
 
@@ -73,47 +72,38 @@ public class MapGeneration : MonoBehaviour {
 					tile_type = 2;
 				}
 
-				//keep it 2 digit
 
 
+					//write as 2 digit number
 				if(tile_type<10){
 
 					for(int i=0;i<map_scale;i++){
+							//write line to string first
 							current_line=current_line+"0"+tile_type;
-						             // mapText = mapText+"0"+tile_type;
+						             
 					}
 
 				}else{
 
 					for(int i=0;i<2;i++){
 							current_line=current_line+tile_type;
-						//mapText = mapText+tile_type;
+						
 					}
 				}
 
 				map_position++;
 
 			}
-			//Debug.Log ("At new line, The Pixel Temp was "+temp+" and the wet was "+wet);
+			//Write line to text file as many times as scale
 				for(int i=0;i<map_scale;i++){
 					writer.WriteLine (current_line);
 				}
+
+				//reset string to blank
 				current_line="";
 
 		}
 		}
-	
-
-
-			
-		/*{
-			using(TextWriter textWriter = File.CreateText (mapFile)){
-				textWriter.Write (mapText);
-			}
-			Debug.Log (mapFile+" created.");
-		}
-		*/
-
 
 }
 }
