@@ -4,8 +4,8 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
 	float zoom;
-	public float min = 6;
-	public float max = 8;
+	public readonly float min = 6;
+	public readonly float max = 8;
 
 	// Use this for initialization
 	void Start () {
