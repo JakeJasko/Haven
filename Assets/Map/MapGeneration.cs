@@ -12,10 +12,13 @@ public class MapGeneration : MonoBehaviour {
 	string mapText;
 	float temp;
 	float wet;
+	int map_scale;
+
+
 
 	// Use this for initialization
 	void Start () {
-		createRandomMap ();
+
 	}
 	
 	// Update is called once per frame
@@ -23,27 +26,30 @@ public class MapGeneration : MonoBehaviour {
 	
 	}
 
-	void createRandomMap() {
-
-		//where to save map file
+	public void createRandomMap() {
 		string mapFile = "Assets/Map/MapFiles/Map.txt";
-
+		//where to save map file
+		
+		
 		//where to acquire temp/wet noise maps
-	
+		
 		//xy map dimensions
 		int playerMapX = 90;
 		int playerMapY = 90;
-
-
+		string current_line = "";
+		map_scale = 1;
+		
 		//how many types of tiles
-		int tileMapSize = 4;
-
+		int tileMapSize = 2;
+		
 		int tile_type = 0;
 		//keeps track of where on the IMG we are for the arrays
 		int map_position = 0;
 
 
-
+		//Stream writer for writing to the file
+		using (StreamWriter writer = new StreamWriter(mapFile)) {
+			Debug.Log ("Writing New Map");
 		for(int y=0; y < playerMapY; y++){
 			for(int x=0; x< playerMapX; x++){
 
@@ -69,34 +75,44 @@ public class MapGeneration : MonoBehaviour {
 
 				//keep it 2 digit
 
+
 				if(tile_type<10){
-					mapText = mapText+"0"+tile_type;
+
+					for(int i=0;i<map_scale;i++){
+							current_line=current_line+"0"+tile_type;
+						             // mapText = mapText+"0"+tile_type;
+					}
 
 				}else{
-					mapText = mapText+tile_type;
+
+					for(int i=0;i<2;i++){
+							current_line=current_line+tile_type;
+						//mapText = mapText+tile_type;
+					}
 				}
 
 				map_position++;
 
 			}
-			Debug.Log ("At new line, The Pixel Temp was "+temp+" and the wet was "+wet);
-			mapText = mapText+"\n";
+			//Debug.Log ("At new line, The Pixel Temp was "+temp+" and the wet was "+wet);
+				for(int i=0;i<map_scale;i++){
+					writer.WriteLine (current_line);
+				}
+				current_line="";
 
 		}
+		}
+	
 
-		if(System.IO.File.Exists (mapFile)){
-			Debug.Log (mapFile+" already exists. Overwriting");
-			using(TextWriter textWriter = File.CreateText (mapFile)){
-				textWriter.Write (mapText);
-			}
-			Debug.Log (mapFile+" created.");
+
 			
-		}else{
+		/*{
 			using(TextWriter textWriter = File.CreateText (mapFile)){
 				textWriter.Write (mapText);
 			}
 			Debug.Log (mapFile+" created.");
 		}
+		*/
 
 
 }

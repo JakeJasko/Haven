@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: 443272d6ccecbf94a956a772a51375fd
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tempFile: {fileID: 2800000, guid: 340b7fe8cad07624c9ba06142f7cb3f8, type: 3}
+  - wetFile: {fileID: 2800000, guid: ff0a88e29fc41d040a84b29848db0d21, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
