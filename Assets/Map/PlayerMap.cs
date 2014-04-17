@@ -10,8 +10,8 @@ public class PlayerMap : MonoBehaviour {
 	static Tileset tileset;
 
 	// Tiles per player map
-	static public int size_x = 30;
-	static public int size_y = 30;
+	static public readonly int size_x = 30;
+	static public readonly int size_y = 30;
 
 	// Tile map
 	// TileMap tilemap;
@@ -110,8 +110,6 @@ public class PlayerMap : MonoBehaviour {
 		// Assigns generated texture to mesh object
 		MeshRenderer mesh_renderer = GetComponent<MeshRenderer>();
 		mesh_renderer.sharedMaterial.mainTexture = texture;
-		
-		Debug.Log ("Done Texture!");
 	}
 
 	public void BuildMesh() {
