@@ -28,7 +28,7 @@ public class MapController : MonoBehaviour {
 	}
 
 	void Update() {
-		
+
 	}
 
 	void UpdatePosition(){
