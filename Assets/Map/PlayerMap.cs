@@ -6,8 +6,8 @@ using System.Collections;
 [RequireComponent(typeof(MeshCollider))]
 public class PlayerMap : MonoBehaviour {
 	// Tile set controller logic, finds tileset controller object in scene
-	static GameObject tileset_controller;
-	static Tileset tileset;
+	public static GameObject tileset_controller;
+	public static Tileset tileset;
 
 	// Tiles per player map
 	public static readonly int size_x = 30;
@@ -17,6 +17,9 @@ public class PlayerMap : MonoBehaviour {
 	public static readonly float mesh_width = 30;
 	public static readonly float mesh_height = 15;
 
+	// Clear Colors
+	public static Color[] clear_tex;
+
 	/*
 	public PlayerMap(int worldpos_x, int worldpos_y){
 		// TO-DO: load from file at this point in world
@@ -25,10 +28,13 @@ public class PlayerMap : MonoBehaviour {
 	*/
 
 	void Start () {
-		tileset_controller = GameObject.Find("Tileset Controller");
-		tileset = (Tileset) tileset_controller.GetComponent("Tileset");
+		if(tileset_controller == null)
+			tileset_controller = GameObject.Find("Tileset Controller");
+		if(tileset == null)
+			tileset = (Tileset) tileset_controller.GetComponent("Tileset");
 
 		BuildMesh ();
+		// BuildTexture ();
 	}
 
 	void DrawTile(int tile_id, int offset_x, int offset_y, Texture2D texture){
@@ -60,8 +66,6 @@ public class PlayerMap : MonoBehaviour {
 				
 				// Draw Tile
 				DrawTile(Random.Range(0,3), (int)isoCoords.x, (int)isoCoords.y, texture);
-				
-				// texture.SetPixels(x, y, tileResolution_x, tileResolution_y, terrainTiles.GetPixels());
 			}
 		}
 	}
@@ -74,12 +78,15 @@ public class PlayerMap : MonoBehaviour {
 		// Instantiate empty texture for mesh
 		Texture2D texture = new Texture2D(texWidth, texHeight);
 
-		// Initialize texture to transparent
-		for (int i=0; i < texWidth; i++) {
-			for(int j=0; j < texHeight; j++){
-				texture.SetPixel(i,j,Color.clear);
-			}
+		// Initialize clear texture if unset previously
+		if (clear_tex == null) {
+			clear_tex = new Color[texWidth * texHeight];
+			for (int i = 0; i < clear_tex.Length; i++)
+				clear_tex[i] = Color.clear;
 		}
+
+		// Initialize texture to transparent
+		texture.SetPixels (0, 0, texWidth, texHeight, clear_tex);
 
 		// Handles map drawing logic
 		DrawMap(texture);
@@ -90,7 +97,7 @@ public class PlayerMap : MonoBehaviour {
 
 		// Assigns generated texture to mesh object
 		MeshRenderer mesh_renderer = GetComponent<MeshRenderer>();
-		mesh_renderer.sharedMaterial.mainTexture = texture;
+		mesh_renderer.material.mainTexture = texture;
 	}
 
 	private void BuildMesh() {
@@ -135,6 +142,6 @@ public class PlayerMap : MonoBehaviour {
 		mesh_filter.mesh = mesh;
 		mesh_collider.sharedMesh = mesh;
 		
-		BuildTexture();
+		// BuildTexture();
 	}
 }
