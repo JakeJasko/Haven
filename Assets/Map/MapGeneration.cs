@@ -13,8 +13,15 @@ public class MapGeneration : MonoBehaviour {
 	float temp;
 	float wet;
 
+	//where to save map file
+	readonly string mapFile = "Assets/Map/MapFiles/Map.txt";
 	//map scale
-	int map_scale = 1;
+	readonly int map_scale = 5;
+	//xy map dimensions
+	readonly int playerMapX = 30;
+	readonly int playerMapY = 30;
+	//For writing to text file
+	 string current_line = "";
 	
 	// Use this for initialization
 	void Start () {
@@ -27,16 +34,8 @@ public class MapGeneration : MonoBehaviour {
 	}
 
 	public void createRandomMap() {
-		//where to save map file
-		string mapFile = "Assets/Map/MapFiles/Map.txt";
-		
-		//xy map dimensions
-		int playerMapX = 90;
-		int playerMapY = 90;
-		//For writing to text file
-		string current_line = "";
 	
-		
+
 		//how many types of tiles
 		int tileMapSize = 2;
 		
@@ -52,7 +51,7 @@ public class MapGeneration : MonoBehaviour {
 		for(int y=0; y < playerMapY; y++){
 			for(int x=0; x< playerMapX; x++){
 
-				//take current pixel in respective images and write them to appropriate array as either 255 or 0
+				//take current pixel in respective images and write them to appropriate array as either 1 or 0
 				temp = tempFile.GetPixel (x,y).r;
 
 				wet = wetFile.GetPixel (x,y).r;
@@ -70,7 +69,9 @@ public class MapGeneration : MonoBehaviour {
 				//Forest
 				}else if (temp == 1 && wet == 1){
 					tile_type = 2;
-				}
+					}else{
+						tile_type=3;
+					}
 
 
 
@@ -85,11 +86,13 @@ public class MapGeneration : MonoBehaviour {
 
 				}else{
 
-					for(int i=0;i<2;i++){
+						for(int i=0;i<map_scale;i++){
 							current_line=current_line+tile_type;
 						
 					}
 				}
+
+
 
 				map_position++;
 
