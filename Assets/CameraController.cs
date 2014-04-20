@@ -4,12 +4,12 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
 	float zoom;
-	public readonly float min = 6;
-	public readonly float max = 8;
+	public readonly float min = 2;
+	public readonly float max = 14;
 
 	// Use this for initialization
 	void Start () {
-		zoom = Camera.main.orthographicSize;
+		zoom = gameObject.camera.orthographicSize;
 	}
 	
 	// Update is called once per frame
@@ -17,17 +17,19 @@ public class CameraController : MonoBehaviour {
 		float scrollDelta = Input.GetAxis ("Mouse ScrollWheel");
 		if (zoom - scrollDelta > min && zoom - scrollDelta < max) {
 			zoom -= scrollDelta;
-			Camera.main.orthographicSize = zoom;
+			// Camera.main.orthographicSize = zoom; 
+			// changed to reference the script's gameObject vs finding camera in scene
+			gameObject.camera.orthographicSize = zoom;
 		}
 
 		if (Input.GetKeyDown (KeyCode.RightArrow))
-			Camera.main.transform.Translate (1, 0, 0);
+			gameObject.transform.Translate (1, 0, 0);
 		if (Input.GetKeyDown (KeyCode.LeftArrow))
-			Camera.main.transform.Translate (-1, 0, 0);
+			gameObject.transform.Translate (-1, 0, 0);
 		if (Input.GetKeyDown (KeyCode.UpArrow))
-			Camera.main.transform.Translate (0, 1, 0);
+			gameObject.transform.Translate (0, 1, 0);
 		if (Input.GetKeyDown (KeyCode.DownArrow))
-			Camera.main.transform.Translate (0, -1, 0);
+			gameObject.transform.Translate (0, -1, 0);
 
 	}
 }
