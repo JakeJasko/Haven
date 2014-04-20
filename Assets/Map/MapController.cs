@@ -16,9 +16,11 @@ public class MapController : MonoBehaviour {
 	// Playermap offset
 	static readonly float playermap_offset_x = PlayerMap.mesh_width;
 	static readonly float playermap_offset_y = PlayerMap.mesh_height;
+
+	public PlayerMap playermap_prefab;
 	
 	// This is an array of the playermap objects in the scene
-	static GameObject[] playermap_objects = new GameObject[minimap_size_x * minimap_size_y];
+		//static GameObject[] playermap_objects = new GameObject[minimap_size_x * minimap_size_y];
 	// Keeps track of the actually script objects within those objects
 	static PlayerMap[] minimap = new PlayerMap[minimap_size_x * minimap_size_y];
 
@@ -37,7 +39,7 @@ public class MapController : MonoBehaviour {
 			// Updates position of PlayerMap object using offset
 				int array_pos = (i * minimap_size_x + j);
 				Vector2 new_position = HavenMath.Iso.toISO(j, i, playermap_offset_x, playermap_offset_y);
-				playermap_objects[array_pos].transform.position = new_position;
+				minimap[array_pos].transform.position = new_position;
 				// playermap_objects[array_pos].GetComponent<PlayerMap>().BuildTexture();
 				UpdateTexture (array_pos);
 			}
@@ -45,26 +47,29 @@ public class MapController : MonoBehaviour {
 
 	}
 
-	void UpdateTexture(int minimap_num){
-		minimap[minimap_num].BuildTexture ();
+	void UpdateTexture(int array_pos){
+		//Debug.Log (playermap_objects [array_pos].GetComponent<PlayerMap>());
+		//PlayerMap pmap_object = (PlayerMap)(playermap_objects [array_pos].GetComponent<PlayerMap> ());
+		//pmap_object.BuildTexture();
+		minimap[array_pos].BuildTexture ();
 	}
 
 	void InstantiatePlayerMaps(){
 		// Instantiate minimap array with existing PlayerMap scene objects
-		for (int i = 0; i < playermap_objects.Length; i++) {
+		for (int i = 0; i < minimap.Length; i++) {
 			// Use this when objects already exist in scene
 			// GameObject playermap_controller = GameObject.Find("PlayerMap" + i);
 			
 			// Creates & Instantiates into scene the PlayerMapPrefab GameObject
-			GameObject playermap_controller = Instantiate(Resources.Load("PlayerMapPrefab")) as GameObject;
+			PlayerMap playermap_controller = (PlayerMap) Instantiate(playermap_prefab);
 			playermap_controller.name = "PlayerMap" + i;
 
-			PlayerMap playermap = (PlayerMap) playermap_controller.GetComponent(typeof(PlayerMap));
+			//PlayerMap playermap = (PlayerMap) playermap_controller.GetComponent(typeof(PlayerMap));
 
 			// Keeps track of the PlayerMap GameObjects in scene
-			playermap_objects[i] = playermap_controller;
+			//				playermap_objects[i] = playermap_controller;
 			// Keeps track of the PlayerMap script within the GameObjects
-			minimap[i] = playermap;
+			minimap[i] = playermap_controller;
 
 			// playermap.BuildTexture();
 		}
