@@ -17,11 +17,10 @@ public class MapController : MonoBehaviour {
 	static readonly float playermap_offset_x = PlayerMap.mesh_width;
 	static readonly float playermap_offset_y = PlayerMap.mesh_height;
 
+	// PlayerMap GameObjects are derived from this prefab
 	public PlayerMap playermap_prefab;
 	
 	// This is an array of the playermap objects in the scene
-		//static GameObject[] playermap_objects = new GameObject[minimap_size_x * minimap_size_y];
-	// Keeps track of the actually script objects within those objects
 	static PlayerMap[] minimap = new PlayerMap[minimap_size_x * minimap_size_y];
 
 	void Start () {
