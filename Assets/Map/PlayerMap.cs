@@ -50,7 +50,7 @@ public class PlayerMap : MonoBehaviour {
 				Color pixelColor = tile[py * Tileset.tile_width + px];
 
 				// Alpha check
-				if(pixelColor.a > 0)
+				if(pixelColor.a == 1)
 					texture.SetPixel(offset_x + px, offset_y + py, pixelColor);
 			}
 		}

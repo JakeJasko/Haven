@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour {
 
 	float zoom;
 	public readonly float min = 2;
-	public readonly float max = 14;
+	public readonly float max = 12;
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +30,5 @@ public class CameraController : MonoBehaviour {
 			gameObject.transform.Translate (0, 1, 0);
 		if (Input.GetKeyDown (KeyCode.DownArrow))
 			gameObject.transform.Translate (0, -1, 0);
-
 	}
 }

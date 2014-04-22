@@ -33,7 +33,7 @@ public class MapController : MonoBehaviour {
 
 	}
 
-	void UpdatePosition(){
+	public void UpdatePosition(){
 		for (int i = 0; i < minimap_size_x; i++) {
 			for(int j = minimap_size_y - 1; j >= 0; j--){
 			// Updates position of PlayerMap object using offset
@@ -47,11 +47,11 @@ public class MapController : MonoBehaviour {
 
 	}
 
-	void UpdateTexture(int array_pos){
+	void UpdateTexture(int playermap_num){
 		//Debug.Log (playermap_objects [array_pos].GetComponent<PlayerMap>());
 		//PlayerMap pmap_object = (PlayerMap)(playermap_objects [array_pos].GetComponent<PlayerMap> ());
 		//pmap_object.BuildTexture();
-		minimap[array_pos].BuildTexture ();
+		minimap[playermap_num].BuildTexture ();
 	}
 
 	void InstantiatePlayerMaps(){
