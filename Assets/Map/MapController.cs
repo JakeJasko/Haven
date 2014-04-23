@@ -25,11 +25,20 @@ public class MapController : MonoBehaviour {
 
 	void Start () {
 		InstantiatePlayerMaps ();
-		UpdatePosition ();
+		// UpdatePosition ();
 	}
 
 	void Update() {
 
+	}
+
+	public void UpdatePosition(int array_pos){
+		int j = array_pos / minimap_size_x;
+		int i = array_pos - (j * minimap_size_y);
+
+		Vector2 new_position = HavenMath.Iso.toISO(j, i, playermap_offset_x, playermap_offset_y);
+		minimap[array_pos].transform.position = new_position;
+		UpdateTexture (array_pos);
 	}
 
 	public void UpdatePosition(){

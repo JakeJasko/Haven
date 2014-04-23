@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour {
 	public readonly float min = 2;
 	public readonly float max = 12;
 
+	int current_map = 0;
+
 	// Use this for initialization
 	void Start () {
 		zoom = gameObject.camera.orthographicSize;
@@ -20,6 +22,12 @@ public class CameraController : MonoBehaviour {
 			// Camera.main.orthographicSize = zoom; 
 			// changed to reference the script's gameObject vs finding camera in scene
 			gameObject.camera.orthographicSize = zoom;
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			MapController map_controller = GameObject.Find("MiniMap Controller").GetComponent<MapController>();
+			map_controller.UpdatePosition(current_map);
+			current_map++;
 		}
 
 		if (Input.GetKeyDown (KeyCode.KeypadMinus)) {
